@@ -12,7 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(body: Center(child: ListComponent(),)),
+      home: Scaffold(body: Center(child: ListComponent(toDoTask: 'Task'),)),
     );
   }
+  
 }

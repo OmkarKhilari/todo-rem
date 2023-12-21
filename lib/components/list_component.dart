@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ListComponent extends StatefulWidget {
-  const ListComponent({super.key});
+  const ListComponent({
+    required this.toDoTask,
+    super.key
+    });
+
+    final String toDoTask;
   
   @override
   State<ListComponent> createState() => _ListComponentState();
@@ -35,7 +40,7 @@ class _ListComponentState extends State<ListComponent> {
         //         colors: [Color(0xff4b33a9)],
         //         tileMode: TileMode.clamp)),
         decoration: BoxDecoration(
-            color: const Color(0xff4B33A9), 
+            color: !checked ? const Color(0xff4B33A9) : const Color(0xff4B33A9).withOpacity(0.6), 
             borderRadius: BorderRadius.circular(20)),
         child: Row(
           mainAxisSize: MainAxisSize.max,
@@ -51,12 +56,14 @@ class _ListComponentState extends State<ListComponent> {
                   color: Colors.transparent,
                   border: Border.all(width: 0.8, color: const Color(0xffBABABA).withOpacity(0.7)),
                 ),
-                child: checked ? const Icon(Icons.check_sharp, color: Color(0xffFFFFFF),) : null,
+                child: checked ? const Icon(Icons.check, color: Color(0xffFFFFFF),) : null,
               ),
             ),
             const SizedBox(width: 20,),
             Text(
-              'Task 1',
+              widget.toDoTask,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: GoogleFonts.rubik(
                 fontSize: 18,
                 fontWeight: FontWeight.w300,
