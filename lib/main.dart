@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_rem/components/list_component.dart';
+import 'package:todo_rem/pages/to_do_page.dart';
 
-void main() {
+void main() async {
+    // init the hive
+  await Hive.initFlutter();
+
+  // open a box
+  var box = await Hive.openBox('mybox');
+
   runApp(const MyApp());
 }
 
@@ -12,7 +20,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(body: Center(child: ListComponent(toDoTask: 'Task'),)),
+      // home: Scaffold(body: Center(child: ListComponent(toDoTask: 'Task'),)),
+      home: ToDoPage(),
     );
   }
   
