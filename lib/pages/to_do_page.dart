@@ -13,17 +13,19 @@ class ToDoPage extends StatefulWidget {
 }
 
 class _ToDoPageState extends State<ToDoPage> {
-
   final _controller = TextEditingController();
 
   final myBox = Hive.box('mybox');
 
   @override
+    final ToDoDatabase _toDoDatabase = ToDoDatabase();
+
+  @override
   void initState() {
-    if (myBox.get("listData") == null) {
-      ToDoDatabase().createInitialData();
+    if (_toDoDatabase.listData.isEmpty) {
+      _toDoDatabase.createInitialData();
     } else {
-      ToDoDatabase().loadData();
+      _toDoDatabase.loadData();
     }
 
     super.initState();
@@ -31,15 +33,15 @@ class _ToDoPageState extends State<ToDoPage> {
 
   void saveNewTask() {
     setState(() {
-      ToDoDatabase().listData.add(_controller.text);
+      _toDoDatabase.listData.add(_controller.text);
       _controller.clear();
     });
     Navigator.of(context).pop();
-    ToDoDatabase().updateDataBase();
+    _toDoDatabase.updateDataBase();
   }
 
   // create a new task
-  void createNewTask() {
+    void createNewTask() {
     showDialog(
       context: context,
       builder: (context) {
@@ -60,16 +62,18 @@ class _ToDoPageState extends State<ToDoPage> {
         appBar: AppBar(
           toolbarHeight: 72,
           backgroundColor: Color(0xff4B33A9),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20))),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20))),
           centerTitle: true,
           title: Text(
             'ToDo List',
             style: GoogleFonts.rubikMaze(
-              fontSize: 32,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.2,
-              color: Color.fromARGB(255, 215, 214, 214)
-            ),
+                fontSize: 32,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.2,
+                color: Color.fromARGB(255, 215, 214, 214)),
           ),
         ),
         floatingActionButton: FloatingActionButton(
@@ -77,14 +81,17 @@ class _ToDoPageState extends State<ToDoPage> {
             createNewTask();
           },
           backgroundColor: Color(0xff4B33A9),
-          child: Icon(Icons.add, color: Color(0xffBABABA),size: 28,),
+          child: Icon(
+            Icons.add,
+            color: Color(0xffBABABA),
+            size: 28,
+          ),
         ),
         body: ListView.builder(
-          itemCount: ToDoDatabase().listData.length,
-          itemBuilder: (context,index) {
-            return ListComponent(toDoTask: ToDoDatabase().listData[index]);
-          }
-        ),
+            itemCount: ToDoDatabase().listData.length,
+            itemBuilder: (context, index) {
+              return ListComponent(toDoTask: ToDoDatabase().listData[index]);
+            }),
       ),
     );
   }

@@ -29,12 +29,14 @@ class DialogBox extends StatelessWidget {
               controller: controller,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(),
+                focusColor: Color(0xffBABABA),
                 labelText: "Add a new task",
                 labelStyle: GoogleFonts.rubik(
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   color: Color(0xffBABABA)
-                )
+                ),
               ),
             ),
 
